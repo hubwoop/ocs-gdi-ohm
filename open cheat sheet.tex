@@ -1,0 +1,192 @@
+\documentclass[a4paper]{article}
+
+%% Language and font encodings
+\usepackage[german]{babel}
+\usepackage[utf8x]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{float}
+
+%% Sets page size and margins
+\usepackage[a4paper,top=3cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
+
+%% Useful packages
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage[colorinlistoftodos]{todonotes}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+
+%% Definitions
+\newcommand{\entspricht}{\mathrel{\widehat{=}}}
+
+\title{Open CheatSheet: GdI-Edition}
+\author{OpenSource \url{http://de.wikipedia.org/}Code Here}
+
+\begin{document}
+\maketitle
+
+\section{Tabellenwerk}
+\begin{table}[H]
+\centering
+\caption{Umrechnung zu dezimal bis $b^{12}$}
+\label{gaengigeWerte}
+\begin{tabular}{l|c|c|c|c|c|c|c|c|c|c|c|c|c}
+         & $b^{0}$&$b^{1}$&$b^{2}$&$b^{3}$&$b^{4}$&$b^{5}$&$b^{6}$&$b^{7}$&$b^{8}$&$b^{9}$&$b^{10}$&$b^{11}$&$b^{12}$ \\ \hline\hline
+$b = 2$  & 1      & 2     & 4     & 8     & 16    & 32    & 64    & 128   & 256   & 512   & 1024   & 2048   & 4096    \\
+$b = 8$  & 1      & 8     & 64    & 512   & 4096  & -     & -     & -     & -     & -     & -      & -      & -       \\
+$b = 16$ & 1      & 16    & 256   & 4096  & 65536 & -     & -     & -     & -     & -     & -      & -      & -       \\
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{Gängige Zahlensysteme: Darstellungen bis Wert 15}
+\label{hexWerte}
+\begin{tabular}{l|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c}
+$dez$ & 0 & 1 & 2  & 3  & 4   & 5   & 6     & 7     & 8    & 9    & 10   & 11   & 12   & 13   & 14   & 15   \\ \hline\hline
+$bin$ & 0 & 1 & 10 & 11 & 100 & 101 & 110   & 111   & 1000 & 1001 & 1010 & 1011 & 1100 & 1101 & 1110 & 1111 \\
+$oct$ & 0 & 1 & 2  & 3  & 4   & 5   & 6     & 7     & 10   & 11   & 12   & 13   & 14   & 15   & 16   & 17   \\
+$hex$ & 0 & 1 & 2  & 3  & 4   & 5   & 6     & 7     & 8    & 9    & A    & B    & C    & D    & E    & F    \\
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{vielfache von $10_{10}$ (Nützlich für die Berechnung von Dezimalzahlen im Quellsystem)}
+\label{vielfacheVon10}
+\begin{tabular}{cc|c|c|c|c|c|c|c|c}
+Basis &10    & 2    & 3   & 4   & 5   & 6   & 7   & 8   & 9  \\\hline
+      &10    & 1010 & 101 & 22  & 20  & 14  & 13  & 12  & 11 \\\hline
+      &20    &      & 202 & 110 & 40  & 32  & 26  & 24  & 22 \\\hline
+      &30    &      &     & 132 & 110 & 50  & 42  & 36  & 33 \\\hline
+      &40    &      &     &     & 130 & 104 & 55  & 50  & 44 \\\hline
+      &50    &      &     &     &     & 122 & 101 & 62  & 55 \\\hline
+      &60    &      &     &     &     &     & 114 & 74  & 66 \\\hline
+      &70    &      &     &     &     &     &     & 106 & 77 \\\hline
+      &80    &      &     &     &     &     &     &     & 88
+\end{tabular}
+\end{table}
+
+\section{Umrechnen}
+\subsection{Im Dezimalsystem}
+\subsubsection{\texorpdfstring{$b \neq 10$ zu $b = 10$ (beliebige Basis ungleich 10 zu Basis 10)}{b-adisch ungleich 10 zu Basis 10}}
+Stellen addieren nach folgender Vorschrift:
+\[
+ \sum \limits_{n=0}^{N-1} (a_n * b^{n}), a_n \in \{0, \ldots , b-1\}, i \in \{0, \ldots ,N-1\}
+\]
+wobei $N$: Anzahl der Stellen, $n$: Stelle der Zahl und $a_n$: Wert der Ziffer an Stelle $n$.
+
+\subsubsection{\texorpdfstring{Ein Beispiel: $(124032)_5$}{Ein Beispiel: Basis 5}}
+\[
+(124032)_5 = (1*5^{5})+(2*5^{4})+(4*5^{3})+(0*5^{2})+(3*5^{1})+(2*5^{0}) = 3125 + 1250 + 500 + 0 + 15 + 2 = 4892
+\]
+
+\subsection{\texorpdfstring{Umrechnen im Quellsystem: Von $b \neq 10$ zu $b = 10$}{Rechnen im Quellsystem: Von b-adisch ungleich 10 zu Basis 10}}
+Rechnen im Quellsystem zur Umwandlung von Zahlen beliebiger b-adischer Systeme zum dezimal System
+
+\subsubsection{Der Algorithmus in Worten}
+\begin{enumerate}
+\item Teile die umzurechnende Zahl durch die Repräsentation der $(10)_{10}$ im Quellsystem bis das Ergebnis der Subtraktionen (innerhalb des Divisionsalgorithmus) nicht mehr durch "10" teilbar sind. Das letzte Ergebnis der Subtraktion ist der Divisionsrest.
+\item Wiederhole Schritt 1 für jedes Ergebnis (ohne Rest) bis das Resultat nicht mehr durch die Repräsentation von $(10)_{10}$ teilbar ist.
+\item Die Reste der Divisionen sind die Quellsystemrepräsentanten der einzelnen Stellen der zu berechnenden Dezimalzahl. Die hochwertigste Stelle entspricht der zuletzt vorgenommenen Division.
+\end{enumerate}
+
+\subsubsection{\texorpdfstring{Ein Beispiel: $(120102)_3$ zu $(416)_{10}$}{Ein Beispiel: 120102 Basis 3 zu Dezimal 416}}
+Folgende Tabelle hilft bei der Berechnung der Divisionen. Man braucht nur vielfache bis $b-1$ zum berechnen der Divisionen.
+\begin{table}[H]
+\centering
+\caption{Vielfache von $(10)_{10}$ im 3-er System}
+\label{vielfacheVon10in3}
+\begin{tabular}{c|c}
+Basis 10 & basis 3 \\\hline
+10       & 101     \\\hline
+20       & 202
+\end{tabular}
+\end{table}
+\begin{eqnarray}
+120102 / 101 =  1112\;R\:20 \\
+1112 / 101 = 11\;R\:1 \\
+11 / 101 = 0\;R\:11
+\end{eqnarray}
+Aus (3) $ \Rightarrow  (11)_3 \entspricht (4)_{10} $ \\
+Aus (2) $ \Rightarrow  (1)_3 \entspricht (1)_{10} $ \\
+Aus (1) $ \Rightarrow  (20)_3 \entspricht (6)_{10} $ \\
+
+$ \Rightarrow (416)_{10} $
+
+\section{Vorzeichenbehaftete Darstellungen}
+\subsection{kleinste / größte darstellbare Zahl mit N Bits}
+\paragraph{Exzess-N}
+kleinste: -N; Größte: N-1
+\paragraph{b-1-Komplement}
+$[ -(2^{N-1}-1) … +(2^{N-1}-1)]$\\
+doppelte null: 0000 und 1111 sind beides null
+\paragraph{b-Komplement}
+$[ - 2^{N-1} … +2^{N-1} - 1]$
+
+\subsection{Rechnen mit dem einer Komplement}
+Den einer Rücklauf beachten (carry bit von höchster stelle wird (falls vorhanden) zum Ergebnis addiert (Ergebnis + 1)
+\subsection{Rechnen mit dem zweier Komplement}
+nach der Komplementbildung eins addieren.
+\subsection{Rechnen im Exzesscode}
+
+\subsection{Welche Zahlen sind in einem b-adischen System negativ}
+\paragraph{bei geraden basen} ist die erste Ziffer größergleich $ b / 2 $ gilt die zahl als negativ ansonsten ist sie positiv \\
+So sind die vorzeichenlosen Zahlen $1 … (b^N/2)-1$ im b-Komplement positiv, $(b^N/2) … b^N-1$ sind negativ, $0$ ist null.\\
+Im (b-1)-Komplement gilt, dass die Zahlen $(b^N/2) … b^N-2$ negativ sind, $b^N-1$ ist minus null.
+\paragraph{bei ungeraden basen}
+Hier wird die Trennlinie bei der Zahl $(aaa...a)_b$ gezogen, wobei $a=(b-1)/2$ ist. Bei$ b=3$ ist es die Zahl $(111...1)_3$.
+\section{Reele Zahlen}
+\subsection{2-adische Entwicklung (Dezimal zu Binär wandeln)}
+\begin{enumerate} 
+\item Teile durch 2
+\item Erstes Ergebnis: Erste Stelle nach dem Komma 
+\item Wenn Ergebnis < 0 beudetet dies eine 0 für diese Nachkommastelle
+\end{enumerate}
+Trick: Wenn die Zahl welche binär dargestellt werden soll eine Zweierpotenz im Nenner hat, dann stellt der Wert des Exponenten die Anzahl der Nachkommastellen dar. Also bspw. $ 1/8 = 1/2^3 $ dar. Daraus folgt 3 Nachkommastellen (weil der Exponent die drei ist). Die Zahl auf dem Bruch wird dann von rechts eingeschoben also bspw. $2/8 = 2/2^3 $ => drei Nachkommastellen und $ 2 = 01 $ daraus folgt das Ergebnis: $ 0.010 = 1/4$
+
+
+\subsection{Konvertieren zwischen Binär/Hexadezimal/Dezimal}
+Folgende Beispiele beschreiben das Schema:
+
+\paragraph{Vorkomma Anteil} (siehe Kapitel 2 und 3 - Umrechnen ganzer Zahlen)
+\begin{eqnarray}
+10110.110010 \\
+0001 = (1)_{16} \\
+0110 = (6)_{16}\\
+\Rightarrow (16)_{16} \\
+(16)_{16} = (22)_{10}
+\end{eqnarray}
+
+\paragraph{Nachkomma Anteil zu dez}
+Aufsummieren:
+$N*b^{-1}+N*b^{-2}+...+N*b^{-i} $ wobei i die letzte Nachkommastelle ist und N der wert der stelle
+
+\paragraph{Shortcut bei Zahlen mit nur einsen nach dem komma}
+Wert von $0.1111$ (also vier stellen nach dem Komma): $(1-2^{-4}) = 2^{-1}+2^{-2}+2^{-3}+2^{-4} = \frac{15}{16}$
+
+\paragraph{Nachkommaanteil von bin zu hex}
+Vierergrüppchen bilden: $ \Rightarrow (10110.110010)_{2} = (0001)(0110).(1100)(1000) = (16.C8)_{16}$ 
+
+\subsection{Gleitkommazahlen}
+\paragraph{normalisiert} ist eine Gleitkommazahl wenn die Ziffern nach dem Komma sich nicht mehr weiter nach links verschieben lassen ohne das werte über das Komma "hinausrutschen". Die folgenden Werte sind bereits normalisiert:
+\begin{eqnarray}
+0.11001*2^{-39} \\
+0.001011*8^4
+\end{eqnarray}
+\paragraph{Unterlauf- und Überlaufbereich}
+Unterlauf: Kleinste zulässige(!) Darstellung wählen und Dezimalwert berechnen. Dabei darauf achten: wenn normalisierung gefordert wird, ist die kleinste zulässige mantisse nicht 0.000001 sonder 0.1. In IEEE ist bspw. keine normalisierung gefordert, daher kann man hier wirklich den kleinst möglichen mantissenwert annehmen.
+
+\subsubsection{IEEE-Single-Precision Floating Point}
+
+\paragraph{Umrechnung IEEE zu Dez} von links: Bit 1: Vorzeichen, Bits 2-9 (8bit): Exponent, Bits 10-32 (23bit): Mantisse.\\
+{\Large $z = \pm1.m_1 ... m_{23}*2^{e_1 ... e_8-127}$ mit VZ $1 \stackrel{\wedge}{=} - $ und $0 \stackrel{\wedge}{=} +$} 
+\\ 
+
+
+
+
+
+
+\end{document}
+
+
