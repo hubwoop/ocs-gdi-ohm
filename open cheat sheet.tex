@@ -76,6 +76,9 @@
 	\end{tabular}
 	\end{table}
 
+\section{Rechnen in b-Adischen Systemen}
+	\subsection{Subtraktion}
+		Beispiel: $(11)_4 - (2)_4 = (2)_4$\\Wie geht das: Man leiht sich eine 1 von der nächsten stelle und hat somit effektiv $(4+1-2)_{10} = 2_{10} = 2_{4}$
 \section{Umrechnen}
 	\subsection{\texorpdfstring{$b = 10$ zu $b \neq 10$ (Basis 10 zu beliebige Basis ungleich 10)}{Basis 10 zu b-adisch ungleich 10}}
 		\begin{enumerate}
@@ -154,7 +157,7 @@
 		Umwandlung zu Exzess ist immer: darzustellende Zahl + Exzesszahl ($2^{Anzahl der Bits} / 2$)
 		Unwandlung von Exzess ist immer: Codierte Zahl - Exzesszahl
 		
-	\subsection{Welche Zahlen sind in einem b-adischen System negativ}
+	\subsection{Welche Zahlen sind im b-Komplement negativ}
 		\paragraph{bei geraden basen} ist die erste Ziffer größergleich $ b / 2 $ gilt die zahl als negativ ansonsten ist sie positiv \\
 		So sind die vorzeichenlosen Zahlen $1 … (b^N/2)-1$ im b-Komplement positiv, $(b^N/2) … b^N-1$ sind negativ, $0$ ist null.\\
 		Im (b-1)-Komplement gilt, dass die Zahlen $(b^N/2) … b^N-2$ negativ sind, $b^N-1$ ist minus null.
