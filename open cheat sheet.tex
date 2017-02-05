@@ -216,8 +216,8 @@
 			Bei positiven Exponenten gilt: wenn die zahlen nach links geschoben werden müssen muss vom Exponenten abgezogen werden, wenn die zahlen nach rechts geschoben werden muss man zum Exponenten addieren.\\
 			Bei negativen verhält es sich genau anders herum.\\
 			$0.001011 \cdot 2^{12} = 0.1011 \cdot 2^{10}$\\
-			Dabei unbedingt auf die Exponentenbasis achten! Im Dualsystem zur Basis zwei normalisieren geht einfach: pro geschobene stelle wird der Exponent um eins erhöht/erniedrigt. Bei Exponentenbasis 8 kann nur um 4 stellen geschoben werden (pro Exponentveränderung um 1)!
-			$0.000011001 \cdot 8^{-12} = 0.11001 \cdot 8^{-13}$
+			Dabei unbedingt auf die Exponentenbasis achten! Im Dualsystem zur Basis zwei normalisieren geht einfach: pro geschobene stelle wird der Exponent um eins erhöht/erniedrigt. Bei Exponentenbasis 8 kann nur um 3 stellen geschoben werden(pro Exponentveränderung um 1), weil $8 = 2^3$!\\
+			$0.00011001 \cdot 8^{-12} = 0.11001 \cdot 8^{-13}$
 		\paragraph{Unterlauf- und Überlaufbereich}
 			Unterlauf: Kleinste zulässige(!) Darstellung wählen und Dezimalwert berechnen. Dabei darauf achten: wenn Normalisierung gefordert wird, ist die kleinste zulässige Mantisse nicht 0.000001 sonder 0.1. In IEEE ist bspw. keine Normalisierung gefordert, daher kann man hier wirklich den kleinst möglichen Mantissenwert annehmen.
 		\paragraph{Floating-Point generell: Abstand zwischen zwei Ziffern in einem Bereich} (Auflösung bestimmen)
